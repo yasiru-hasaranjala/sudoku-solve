@@ -9,39 +9,40 @@ class EntryData:
         self.col = c
         self.choices = n
         
-# Solve Sudoku using Best-first search
+#solving sudoku using best-first search method
 def solve_sudoku(matrix):
     cont = [True]
-    # See if it is even possible to have a solution
+    #finding the possilbilty for a solution
     for i in range(9):
         for j in range(9):
-            if not can_be_correct(matrix, i, j): # If it is not possible, stop
+            if not can_be_correct(matrix, i, j):                       #stop if there is no possibility for a solution
                 return
-    sudoku_helper(matrix, cont) # Otherwise try to solve the Sudoku puzzle
+    sudoku_helper(matrix, cont)                                      # otherwise try to solve the sudoku puzzle
 
-# Helper function - The heart of Best First Search
+# helper function 
 def sudoku_helper(matrix, cont):
-    if not cont[0]: # Stopping point 1
+    if not cont[0]:                                         # stopping point 1
         return
 
-    # Find the best entry (The one with the least possibilities)
+    #finding the one with the least possibilities
     best_candidate = EntryData(-1, -1, 100)
     for i in range(9):
         for j in range(9):
-            if matrix[i][j] == 0: # If it is unfilled
+            if matrix[i][j] == 0:                                      # if it is unfilled
                 num_choices = count_choices(matrix, i, j)
                 if best_candidate.choices > num_choices:
                     best_candidate.set_data(i, j, num_choices)
 
-    # If didn't find any choices, it means...
-    if best_candidate.choices == 100: # Has filled all board, Best-First Search done! Note, whether we have a solution or not depends on whether all Board is non-zero
-        cont[0] = False # Set the flag so that the rest of the recursive calls can stop at "stopping points"
+   
+    #if didn't find any choices means it has filled all board and the best-first search is done.
+    if best_candidate.choices == 100: 
+        cont[0] = False                         # setting the flag for stop 
         return
 
     row = best_candidate.row
     col = best_candidate.col
 
-    # If found the best candidate, try to fill 1-9
+    #if best candidate found, try to fill 1-9
     for j in range(1, 10):
         if not cont[0]: # Stopping point 2
             return
@@ -53,29 +54,29 @@ def sudoku_helper(matrix, cont):
 
     if not cont[0]: # Stopping point 3
         return
-    matrix[row][col] = 0 # Backtrack, mark the current cell empty again
+    matrix[row][col] = 0 # backtracking and marking the current cell empty again
             
 
-# Count the number of choices haven't been used
+# counting the number of choices haven't been used
 def count_choices(matrix, i, j):
-    can_pick = [True,True,True,True,True,True,True,True,True,True]; # From 0 to 9 - drop 0
+    can_pick = [True,True,True,True,True,True,True,True,True,True];            
     
-    # Check row
+    # checking row
     for k in range(9):
         can_pick[matrix[i][k]] = False
 
-    # Check col
+    # checking col
     for k in range(9):
         can_pick[matrix[k][j]] = False;
 
-    # Check 3x3 square
+    # checking 3x3 square
     r = i // 3
     c = j // 3
     for row in range(r*3, r*3+3):
         for col in range(c*3, c*3+3):
             can_pick[matrix[row][col]] = False
 
-    # Count
+    #counting
     count = 0
     for k in range(1, 10):  # 1 to 9
         if can_pick[k]:
@@ -83,20 +84,20 @@ def count_choices(matrix, i, j):
 
     return count
 
-# Return true if the current cell doesn't create any violation
+#return true if the current cell doesn't create any violation
 def can_be_correct(matrix, row, col):
     
-    # Check row
+    #checking row
     for c in range(9):
         if matrix[row][col] != 0 and col != c and matrix[row][col] == matrix[row][c]:
             return False
 
-    # Check column
+    #checking column
     for r in range(9):
         if matrix[row][col] != 0 and row != r and matrix[row][col] == matrix[r][col]:
             return False
 
-    # Check 3x3 square
+    #checking 3x3 square
     r = row // 3
     c = col // 3
     for i in range(r*3, r*3+3):
@@ -106,8 +107,7 @@ def can_be_correct(matrix, row, col):
     
     return True
 
-# Return true if the whole board has been occupied by some non-zero number
-# If this happens, the current board is the solution to the original Sudoku
+#returning true if the whole board has been occupied by non-zero numbers as this is the solution to the original sudoku
 def all_board_non_zero(matrix):
     for i in range(9):
         for j in range(9):
