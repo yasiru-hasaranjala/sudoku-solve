@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from scipy import ndimage
 import math
-import sudokuSolver 
+import videoInput.sudokuSolver 
 import copy
 
 

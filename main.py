@@ -3,6 +3,7 @@ from tkinter import * #or Tkinter if you're on Python2.7
 from PIL import Image, ImageTk
 import tkinter.filedialog as tkFileDialog
 import sudoku
+from videoInput.videoMode import *
 from sudoku import *
 import ntpath
 import os
@@ -30,7 +31,9 @@ def solve(path, window2_main):
     myvar.image = tkimage
     myvar.grid(row=1,column=0, columnspan=3, sticky="nsew")
 
-
+def loadVdo(window3_main):
+    print("dfsfd")
+    
 root = Tk()
 root.title("Sudoku Solver")
 def window1(window2_main):
@@ -38,7 +41,7 @@ def window1(window2_main):
     window1_main = Tk()
     window1_main.title("Sudoku Solver")
     button1 = Button(window1_main,text ='Solve by Image',command = lambda: window2(window1_main), height=2, width=20)
-    button2 = Button(window1_main,text ='Solve by Video',command = lambda: solve("test.jpg"), height=2, width=20)
+    button2 = Button(window1_main,text ='Solve by Video',command = lambda: window3(window1_main), height=2, width=20)
     button3 = Button(window1_main,text ='Close',command = window1_main.destroy, height=2, width=20)
     button1.grid(row=0, column=0, padx=(20, 20), pady=(20, 20))
     button2.grid(row=1, column=0, padx=(20, 20), pady=(20, 20))
@@ -48,7 +51,7 @@ def window1(window2_main):
 def window2(window1_main):
     window1_main.destroy()
     window2_main = Tk()
-    window1_main.title("Solve by Image")
+    window2_main.title("Solve by Image")
     button1 = Button(window2_main,text ='Open Image',command = lambda: loadImg(window2_main), height=2, width=20)
     button2 = Button(window2_main,text ='Solve',command = lambda: solve("test.jpg", window2_main), height=2, width=20)
     button3 = Button(window2_main,text ='Close',command = lambda: window1(window2_main), height=2, width=20)
@@ -56,6 +59,16 @@ def window2(window1_main):
     button2.grid(row=0, column=1, padx=(20, 20), pady=(20, 20))
     button3.grid(row=0, column=2, padx=(20, 20), pady=(20, 20))
     window2_main.mainloop()
+
+def window3(window1_main):
+    window1_main.destroy()
+    window3_main = Tk()
+    window3_main.title("Solve by Video")
+    button1 = Button(window3_main,text ='Open Video',command = videoInput.videoMode.videoView, height=2, width=20)
+    button2 = Button(window3_main,text ='Close',command = lambda: window1(window3_main), height=2, width=20)
+    button1.grid(row=0, column=0, padx=(20, 20), pady=(20, 20))
+    button2.grid(row=0, column=1, padx=(20, 20), pady=(20, 20))
+    window3_main.mainloop()
 
 window1(root)
 root.mainloop()
