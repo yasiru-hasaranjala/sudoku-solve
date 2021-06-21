@@ -35,7 +35,6 @@ def loadVdo(window3_main):
     print("dfsfd")
     
 root = Tk()
-root.title("Sudoku Solver")
 def window1(window2_main):
     window2_main.destroy()
     window1_main = Tk()
@@ -43,9 +42,9 @@ def window1(window2_main):
     button1 = Button(window1_main,text ='Solve by Image',command = lambda: window2(window1_main), height=2, width=20)
     button2 = Button(window1_main,text ='Solve by Video',command = lambda: window3(window1_main), height=2, width=20)
     button3 = Button(window1_main,text ='Close',command = window1_main.destroy, height=2, width=20)
-    button1.grid(row=0, column=0, padx=(20, 20), pady=(20, 20))
-    button2.grid(row=1, column=0, padx=(20, 20), pady=(20, 20))
-    button3.grid(row=2, column=0, padx=(20, 20), pady=(20, 20))
+    button1.grid(row=0, column=0, padx=(70, 70), pady=(20, 20))
+    button2.grid(row=1, column=0, padx=(70, 70), pady=(20, 20))
+    button3.grid(row=2, column=0, padx=(70, 70), pady=(20, 20))
     window1_main.mainloop()
 
 def window2(window1_main):
