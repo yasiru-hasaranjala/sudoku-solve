@@ -243,12 +243,12 @@ def recognize_sudoku_and_solve(image, model, old_sudoku):
     # If this is the same board as last camera frame
     # Phewww, print the same solution. No need to solve it again
     if (not old_sudoku is None) and two_matrices_are_equal(old_sudoku, grid, 9, 9):
-        if(sudokuSolver.all_board_non_zero(grid)):
+        if(videoInput.sudokuSolver.all_board_non_zero(grid)):
             orginal_warp = write_solution_on_image(orginal_warp, old_sudoku, user_grid)
     # If this is a different board
     else:
-        sudokuSolver.solve_sudoku(grid) # Solve it
-        if(sudokuSolver.all_board_non_zero(grid)): # If we got a solution
+        videoInput.sudokuSolver.solve_sudoku(grid) # Solve it
+        if(videoInput.sudokuSolver.all_board_non_zero(grid)): # If we got a solution
             orginal_warp = write_solution_on_image(orginal_warp, grid, user_grid)
             old_sudoku = copy.deepcopy(grid)      # Keep the old solution
 
